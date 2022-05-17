@@ -88,6 +88,7 @@ enum sm_engine_state {
 	ENGINE_BOOTSTRAP_TRANS_DONE,
 #endif
 	ENGINE_DO_REGISTRATION,
+	ENGINE_DO_FULL_REGISTRATION,
 	ENGINE_REGISTRATION_SENT,
 	ENGINE_REGISTRATION_DONE,
 	ENGINE_REGISTRATION_DONE_RX_OFF,
@@ -919,6 +920,13 @@ static int sm_do_registration(void)
 		return ret;
 	}
 
+	set_sm_state(ENGINE_DO_FULL_REGISTRATION);
+}
+
+static void sm_do_full_registration(void)
+{
+	int ret;
+
 	ret = sm_send_registration(true,
 				   do_registration_reply_cb,
 				   do_registration_timeout_cb);
@@ -1091,6 +1099,10 @@ static void lwm2m_rd_client_service(struct k_work *work)
 
 		case ENGINE_DO_REGISTRATION:
 			sm_do_registration();
+			break;
+
+		case ENGINE_DO_FULL_REGISTRATION:
+			sm_do_full_registration();
 			break;
 
 		case ENGINE_DO_UPDATE_REGISTRATION:
