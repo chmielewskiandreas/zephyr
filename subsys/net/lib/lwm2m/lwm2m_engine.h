@@ -38,7 +38,7 @@ int lwm2m_engine_validate_write_access(struct lwm2m_message *msg,
 				       struct lwm2m_engine_obj_field **obj_field);
 
 /* LwM2M context functions */
-int lwm2m_engine_context_close(struct lwm2m_ctx *client_ctx);
+void lwm2m_engine_context_close(struct lwm2m_ctx *client_ctx);
 void lwm2m_engine_context_init(struct lwm2m_ctx *client_ctx);
 
 /* Message buffer functions */
